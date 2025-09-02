@@ -1,0 +1,35 @@
+public class Treasure
+{
+  public string Name { get; set; }
+  public int GoldPieceValue { get; set; }
+ 
+  public Treasure( string name, int goldPieceValue )
+  {
+    Name = name;
+    GoldPieceValue = goldPieceValue;
+  }
+ 
+  public static Treasure Clone( Treasure other )
+  {
+    return new Treasure( other.Name, other.GoldPieceValue );
+  }
+}
+
+public void GenerateTreasure()
+{
+  WeightedPool<Treasure> pool = new WeightedPool<Treasure>( Singleton.DefaultRandom, Treasure.Clone );
+  pool.Add( new Treasure( "Ruby Necklace", 100 ), 14 );
+  pool.Add( new Treasure( "Potion of Healing", 50 ), 14 );
+  pool.Add( new Treasure( "Longsword + 1", 150 ), 16 );
+  pool.Add( new Treasure( "Ring of Fireballs", 300 ), 14 );
+  pool.Add( new Treasure( "Leather Armor", 25 ), 14 );
+  pool.Add( new Treasure( "Small Shield", 25 ), 14 );
+  pool.Add( new Treasure( "Teleportation Scroll", 100 ), 14 );
+ 
+  for ( int x = 0; x < 10; x++ )
+  {
+    Treasure treasure = pool.Choose();
+    Console.WriteLine( $"You found a {treasure.Name} worth {treasure.GoldPieceValue} gp" );
+  }
+}
+
